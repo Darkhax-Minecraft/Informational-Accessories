@@ -1,0 +1,23 @@
+[  
+   {  
+      "modid":"infoaccessories",
+      "name":"Info Accessories",
+      "description":"Trinkets to help you better understand your world.",
+      "version":"${version}",
+      "mcversion":"${mcversion}",
+      "url":"https://minecraft.curseforge.com/projects/informational-accessories",
+      "updateUrl":"",
+      "authorList":[  
+         "Darkhax"
+      ],
+      "credits":"Terraria and Darkosto for the idea.",
+      "logoFile":"",
+      "screenshots":[  
+
+      ],
+      "parent":"",
+      "dependencies":[  
+
+      ]
+   }
+]
