@@ -1,0 +1,10 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "infoaccessories:items/biome_0",
+        "layer1": "infoaccessories:items/biome_1",
+        "layer2": "infoaccessories:items/biome_2",
+        "layer3": "infoaccessories:items/biome_3",
+        "layer4": "infoaccessories:items/biome_4"
+    }
+}
