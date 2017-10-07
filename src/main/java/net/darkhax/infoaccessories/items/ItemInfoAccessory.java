@@ -76,7 +76,7 @@ public class ItemInfoAccessory extends ItemSubType implements IColorfulItem {
                 
                 else if (tintIndex == 4) {
                     
-                    return biome.getSkyColorByTemp(biome.getTemperature());
+                    return biome.getSkyColorByTemp(biome.getTemperature(pos));
                 }
             }
             
