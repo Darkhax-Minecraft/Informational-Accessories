@@ -1,4 +1,4 @@
-package net.darkhax.infoaccessories;
+package net.darkhax.infoaccessories.info;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import net.darkhax.bookshelf.lib.MCDate;
 import net.darkhax.bookshelf.util.BlockUtils;
 import net.darkhax.bookshelf.util.PlayerUtils;
 import net.darkhax.bookshelf.util.StackUtils;
+import net.darkhax.infoaccessories.InfoAccessories;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

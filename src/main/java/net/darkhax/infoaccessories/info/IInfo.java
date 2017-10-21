@@ -1,4 +1,4 @@
-package net.darkhax.infoaccessories;
+package net.darkhax.infoaccessories.info;
 
 import java.util.List;
 

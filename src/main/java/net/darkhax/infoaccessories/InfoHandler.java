@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.darkhax.bookshelf.util.PlayerUtils;
+import net.darkhax.infoaccessories.info.InfoType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.ai.attributes.AttributeMap;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
