@@ -21,7 +21,7 @@ public class InfoAccessories {
     @EventHandler
     public void preInit (FMLPreInitializationEvent event) {
     
-        MinecraftForge.EVENT_BUS.register(this);
+    	new ConfigurationHandler(event.getSuggestedConfigurationFile());
         MinecraftForge.EVENT_BUS.register(new InfoHandler());
         infoItem = REGISTRY.registerItem(new ItemInfoAccessory(), "info_accessory");
     }

@@ -31,8 +31,10 @@ public class InfoHandler {
         final List<String> left = event.getLeft();
         final List<String> right = event.getRight();
         
+        boolean show = ConfigurationHandler.invertF3 ? mc.gameSettings.showDebugInfo : !mc.gameSettings.showDebugInfo;
+        		
         // Exit if not debug mode
-        if (!mc.gameSettings.showDebugInfo) {
+        if (show) {
             
             return;
         }
