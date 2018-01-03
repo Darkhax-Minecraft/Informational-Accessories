@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
 public enum InfoType {
-    
+
     PLAYER_X(Items.COMPASS, (world, player, left, right) -> left.add(String.format("X: %.3f", player.posX))),
     PLAYER_Y(2, (world, player, left, right) -> left.add(String.format("Y: %.3f", player.posY))),
     PLAYER_Z(Items.COMPASS, (world, player, left, right) -> left.add(String.format("Z: %.3f", player.posZ))),
@@ -28,56 +28,56 @@ public enum InfoType {
     SLIME_CHUNK(4, (world, player, left, right) -> left.add("Slime Chunk: " + BlockUtils.isSlimeChunk(world, player.getPosition()))),
     DPS(8, (world, player, left, right) -> left.add("//TODO")),
     STRUCTURE(9, (world, player, left, right) -> left.add("//TODO"));
-    
+
     private final IInfo info;
     private final Item item;
     private final int meta;
-    
+
     InfoType (int meta, IInfo info) {
-        
+
         this(InfoAccessories.infoItem, meta, info);
     }
-    
+
     InfoType (Item item, IInfo info) {
-        
+
         this(item, 0, info);
     }
-    
+
     InfoType (Item item, int meta, IInfo info) {
-    
+
         this.item = item;
         this.meta = meta;
         this.info = info;
     }
-    
+
     public ItemStack getInfoStack () {
-        
-        return new ItemStack(item, 1, meta);
+
+        return new ItemStack(this.item, 1, this.meta);
     }
-    
-    public boolean isValidItem(ItemStack stack) {
-        
+
+    public boolean isValidItem (ItemStack stack) {
+
         return StackUtils.areStacksSimilar(stack, this.getInfoStack());
     }
-    
-    public boolean canPlayerSee(EntityPlayer player) {
-        
+
+    public boolean canPlayerSee (EntityPlayer player) {
+
         return PlayerUtils.playerHasItem(player, this.item, this.meta);
     }
-    
-    public void getInfo(World world, EntityPlayer player, List<String> info, List<String> debug) {
-        
+
+    public void getInfo (World world, EntityPlayer player, List<String> info, List<String> debug) {
+
         this.info.applyInfo(world, player, info, debug);
     }
-    
-    private static void addDateInfo(World world, List<String> infoList) {
-        
+
+    private static void addDateInfo (World world, List<String> infoList) {
+
         final MCDate date = new MCDate(world);
         infoList.add(date.getLocalizedMonthName() + " " + date.getDay() + ", " + date.getYear());
     }
-    
+
     private static void addChunkInfo (World world, EntityPlayer player, List<String> info) {
-        
+
         final Chunk chunk = world.getChunkFromBlockCoords(player.getPosition());
         info.add(String.format("Chunk X: %d y:%d", chunk.x, chunk.z));
     }
