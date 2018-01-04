@@ -2,6 +2,8 @@ package net.darkhax.infoaccessories.info;
 
 import java.util.List;
 
+import baubles.api.BaublesApi;
+import baubles.api.cap.IBaublesItemHandler;
 import net.darkhax.bookshelf.data.MoonPhase;
 import net.darkhax.bookshelf.lib.MCDate;
 import net.darkhax.bookshelf.util.BlockUtils;
@@ -14,6 +16,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Optional;
 
 public enum InfoType {
 
@@ -62,6 +66,14 @@ public enum InfoType {
 
     public boolean canPlayerSee (EntityPlayer player) {
 
+        if (Loader.isModLoaded("baubles")) {
+
+            if (this.hasBauble(player)) {
+
+                return true;
+            }
+        }
+
         return PlayerUtils.playerHasItem(player, this.item, this.meta);
     }
 
@@ -80,5 +92,21 @@ public enum InfoType {
 
         final Chunk chunk = world.getChunkFromBlockCoords(player.getPosition());
         info.add(String.format("Chunk X: %d y:%d", chunk.x, chunk.z));
+    }
+
+    @Optional.Method(modid = "baubles")
+    private boolean hasBauble (EntityPlayer player) {
+
+        final IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
+
+        for (int slot = 0; slot < baubles.getSlots(); slot++) {
+
+            if (this.isValidItem(baubles.getStackInSlot(slot))) {
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

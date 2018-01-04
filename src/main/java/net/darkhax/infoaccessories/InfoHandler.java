@@ -3,20 +3,19 @@ package net.darkhax.infoaccessories;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.darkhax.bookshelf.util.PlayerUtils;
+import net.darkhax.infoaccessories.addons.baubles.BaublesCapabilityHandler;
 import net.darkhax.infoaccessories.info.InfoType;
+import net.darkhax.infoaccessories.items.ItemInfoAccessory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.ai.attributes.AttributeMap;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -84,17 +83,13 @@ public class InfoHandler {
         }
     }
 
-    public static double getStackAttribute (ItemStack stack, EntityEquipmentSlot slot, IAttribute attribute) {
+    @SubscribeEvent
+    @Optional.Method(modid = "baubles")
+    public void onItemCapability (AttachCapabilitiesEvent<ItemStack> event) {
 
-        final IAttributeInstance instance = new AttributeMap().registerAttribute(attribute);
+        if (event.getObject().getItem() instanceof ItemInfoAccessory) {
 
-        final EntityPlayer p = PlayerUtils.getClientPlayer();
-        instance.setBaseValue(p.getEntityAttribute(attribute).getBaseValue());
-        for (final AttributeModifier modifier : stack.getAttributeModifiers(slot).get(attribute.getName())) {
-
-            instance.applyModifier(modifier);
+            event.addCapability(new ResourceLocation("infoaccessories", "baubles_charm"), BaublesCapabilityHandler.INSTANCE);
         }
-
-        return instance.getAttributeValue();
     }
 }
