@@ -10,10 +10,12 @@ import net.darkhax.bookshelf.util.BlockUtils;
 import net.darkhax.bookshelf.util.PlayerUtils;
 import net.darkhax.bookshelf.util.StackUtils;
 import net.darkhax.infoaccessories.InfoAccessories;
+import net.darkhax.infoaccessories.IntercardinalDirection;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.Loader;
@@ -24,6 +26,7 @@ public enum InfoType {
     PLAYER_X(Items.COMPASS, (world, player, left, right) -> left.add(String.format("X: %.3f", player.posX))),
     PLAYER_Y(2, (world, player, left, right) -> left.add(String.format("Y: %.3f", player.posY))),
     PLAYER_Z(Items.COMPASS, (world, player, left, right) -> left.add(String.format("Z: %.3f", player.posZ))),
+    DIRECTION(Items.COMPASS, (world, player, left, right) -> addDirectionInfo(world, player, left)),
     CALENDAR(5, (world, player, left, right) -> addDateInfo(world, left)),
     MOVEMENT(0, (world, player, left, right) -> left.add(String.format("Motion X: %.3f Y: %.3f Z: %.3f", player.motionX, player.motionY, player.motionZ))),
     MOON_PHASE(1, (world, player, left, right) -> left.add("Moon Phase: " + MoonPhase.getCurrentPhase().getPhaseName())),
@@ -92,6 +95,20 @@ public enum InfoType {
 
         final Chunk chunk = world.getChunkFromBlockCoords(player.getPosition());
         info.add(String.format("Chunk X: %d y:%d", chunk.x, chunk.z));
+    }
+
+    private static void addDirectionInfo (World world, EntityPlayer player, List<String> info) {
+
+        final int yaw = MathHelper.floor(player.rotationYaw % 360.0F);
+
+        for (final IntercardinalDirection direction : IntercardinalDirection.values()) {
+
+            if (direction.isDirection(yaw)) {
+
+                info.add(String.format("Direction: %s (%d)", direction.getShorthand(), yaw));
+                break;
+            }
+        }
     }
 
     @Optional.Method(modid = "baubles")
