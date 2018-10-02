@@ -93,7 +93,7 @@ public enum InfoType {
 
     private static void addChunkInfo (World world, EntityPlayer player, List<String> info) {
 
-        final Chunk chunk = world.getChunkFromBlockCoords(player.getPosition());
+        final Chunk chunk = world.getChunk(player.getPosition());
         info.add(String.format("Chunk X: %d y:%d", chunk.x, chunk.z));
     }
 
