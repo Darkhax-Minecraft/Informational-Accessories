@@ -6,6 +6,7 @@ import java.util.List;
 import net.darkhax.infoaccessories.addons.baubles.BaublesCapabilityHandler;
 import net.darkhax.infoaccessories.info.InfoType;
 import net.darkhax.infoaccessories.items.ItemInfoAccessory;
+import net.darkhax.infoaccessories.ConfigurationHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +21,7 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.init.Items;
 
 public class InfoHandler {
 
@@ -68,6 +70,12 @@ public class InfoHandler {
         for (final InfoType type : InfoType.values()) {
 
             if (type.isValidItem(event.getItemStack())) {
+
+                // If item is the compass and coordinates are disabled, don't add the inventory needed tooltip
+                if ((type.isCompass() == true) && (ConfigurationHandler.compassCoords == false)) {
+
+                    break;
+                }
 
                 if (!type.canPlayerSee(event.getEntityPlayer())) {
 
